@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.10)
+
+file (GLOB AionEngineSRC 
+  "Core/*.cpp"
+)
+
+add_library(AionEngine ${AionEngineSRC})
+target_include_directories (AionEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
