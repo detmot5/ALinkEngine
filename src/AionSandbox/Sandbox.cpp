@@ -1,11 +1,14 @@
 #include <iostream>
 #include <AionEngine.h>
 
+
 class Sandbox : public AionEngine::AionEntryPoint {
  public:
-
+  Sandbox() {
+     
+  }
   void run() override {
-    std::cout << "Run" << std::endl;
+    std::cout << "Run Dupa23" << std::endl;
   }
 };
 

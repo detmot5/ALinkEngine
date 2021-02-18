@@ -7,9 +7,10 @@ linux_binary_dir =  "build/Linux"
 platform_windows = "windows"
 platform_linux = "linux"
 
+linux_name = "ubuntu2004"
 
 def build_linux():
-  return subprocess.run([f"debian", f"run", 
+  return subprocess.run([f"{linux_name}", f"run", 
                          f"cd {linux_binary_dir} && ", 
                          "cmake ../../src &&",
                          "make"
@@ -55,9 +56,9 @@ def check_build_dir():
 def run_build(platform, run_clean):
   check_build_dir()
   if platform == platform_linux:
-    print("Building For Linux using WSL Debian")
+    print(f"Building For Linux using WSL {linux_name}")
     if(run_clean): clean_platform(linux_binary_dir)
-    parse_process_status("WSL Debian", build_linux().returncode)
+    parse_process_status(linux_name, build_linux().returncode)
   elif platform == platform_windows: 
     print("Building for Windows")
     if(run_clean): clean_platform(windows_binary_dir)
@@ -67,13 +68,13 @@ def run_build(platform, run_clean):
     if(run_clean):
       clean_platform(linux_binary_dir)
       clean_platform(windows_binary_dir)
-    print("Building For Linux using WSL Debian")
-    linux_status = parse_process_status("WSL Debian", build_linux().returncode)
+    print(f"Building For Linux using {linux_name}")
+    linux_status = parse_process_status(linux_name, build_linux().returncode)
     print("Building for Windows")
     windows_status = parse_process_status("Windows", build_windows().returncode)
     print("Build results")
-    if linux_status == 0: print("Wsl Debian: SUCCESS")
-    else: print("WSL Debian: FAIL")
+    if linux_status == 0: print(f"Wsl {linux_name}: SUCCESS")
+    else: print(f"WSL {linux_name}: FAIL")
     if windows_status == 0: print("Windows: SUCCESS")
     else: print("Windows: FAIL")
 

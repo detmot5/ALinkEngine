@@ -1,11 +1,10 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 project(Aion)
+
 SET(CMAKE_CXX_FLAGS "-std=gnu++17")
 
 
-
 add_definitions(-DAN_PLATFORM_WINDOWS)
-
 
 include_directories(AionEngine)
 
