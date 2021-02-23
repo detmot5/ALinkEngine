@@ -64,7 +64,7 @@ def run_build(platform, run_clean):
     if(run_clean): clean_platform(windows_binary_dir)
     parse_process_status("Windows", build_windows().returncode)
   elif platform == "all":
-    print("Buildin All")
+    print("Building All")
     if(run_clean):
       clean_platform(linux_binary_dir)
       clean_platform(windows_binary_dir)

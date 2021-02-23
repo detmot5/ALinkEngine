@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(Aion)
+project(ALink)
 
 SET(CMAKE_CXX_FLAGS "-std=gnu++17")
 
 
-add_definitions(-DAN_PLATFORM_WINDOWS)
+include_directories(ALinkEngine)
 
-include_directories(AionEngine)
-
-add_subdirectory (AionEngine)
-add_subdirectory (AionSandbox)
+add_subdirectory (ALinkEngine)
+add_subdirectory (ALinkSandbox)
 
 
