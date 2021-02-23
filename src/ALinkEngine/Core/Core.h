@@ -6,7 +6,7 @@
 #elif defined(__linux__)
 #define ALINK_PLATFORM_LINUX   1
 #elif defined(__APPLE__)
-#error This day ALINK keeps Apple away!
+#error This day ALink keeps Apple away!
 #endif
 
 #include <csignal>
