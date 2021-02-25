@@ -4,9 +4,17 @@ file (GLOB ALinkEngineSRC
   "Core/*.cpp"
   "*.cpp"
 )
+set(CMAKE_CXX_STANDARD 17)
+
 add_library(ALinkEngine ${ALinkEngineSRC})
 
+add_subdirectory(vendor)
+
+target_link_libraries(ALinkEngine vendor)
 
 target_precompile_headers(ALinkEngine PUBLIC alinkpch.h)
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
 target_include_directories (ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_include_directories(ALinkEngine PUBLIC vendor/loguru)
+
