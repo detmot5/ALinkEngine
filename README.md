@@ -14,8 +14,8 @@ But the main reason is that C++ is just cool :)
 ##### C++ standard - C++17
 
 ##### Compiler
-  * Windows - MinGW
-  * Linux - Gcc
+  * Windows - MSVC 
+  * Linux - GCC
   * Mac - This day ALink keeps apple away ;) 
   > Every line of code must be tested on every supported platform!
 
@@ -26,10 +26,12 @@ But the main reason is that C++ is just cool :)
   * Scripts for linux build on windows using WSL
 
 ##### Code style guide 
-Based on Java
+Based on Google
 * Braces at the same line
-* Names of classes starts with a capital letter and has a capital letter for each new word
-* Names of functions and variables written in camelCase
+* Names of classes and methods starts with a capital letter and has a capital letter for each new word
+etc..
+https://google.github.io/styleguide/cppguide.html
+
 
 It's fully free and open source.
 
