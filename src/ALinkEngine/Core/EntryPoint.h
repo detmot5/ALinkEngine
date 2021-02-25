@@ -1,17 +1,19 @@
 #ifndef ALINKENGINE_CORE_ENTRYPOINT_H_
 #define ALINKENGINE_CORE_ENTRYPOINT_H_
+#include "Application.h"
 
-namespace ALinkEngine {
+int main(int argc, char* argv[]) {
+
+  auto entry = ALinkEngine::CreateApplication();
+  entry->InternalInit(argc, argv);
+  entry->Init();
   
-class ALinkEntryPoint {
- public:
-  ALinkEntryPoint() {}
-  ~ALinkEntryPoint() {}
-  virtual void run() = 0;
-};
+  entry->Run();
+  
+  entry->ShutDown();
+  delete entry;
+}
 
 
-ALinkEntryPoint* createEntry();
-}  // namespace ALinkEngine
 
 #endif  // ALINKENGINE_CORE_ENTRYPOINT_H_

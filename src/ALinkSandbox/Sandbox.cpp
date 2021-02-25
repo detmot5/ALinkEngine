@@ -1,15 +1,23 @@
 #include <iostream>
 #include <ALinkEngine.h>
-#include <unordered_map>
 
-class SandBox : public ALinkEngine::ALinkEntryPoint {
+
+class SandBox : public ALinkEngine::ALinkApplication {
  public:
-  SandBox() {
-    std::cout << "Init" << std::endl;
+  void Init() override { 
+    ALINK_LOG_WARN("Guguguwno %d", 20);
+    ALINK_LOG_ERROR("Guguguwno %d", 50);
+    ALINK_LOG_WARN("iiiiiiiiiiiiii %d", 20);
+    ALINK_LOG_INFO("iiiiiiiiiiiiii %d", 400);
   }
-  void run() override {
-    std::cout << "Run Dupa23456789" << std::endl;
+  
+  void ShutDown() override {
+  
+  }
+
+  void Run() override {
+    
   }
 };
 
-ALinkEngine::ALinkEntryPoint* ALinkEngine::createEntry() { return new SandBox(); }
+ALinkEngine::ALinkApplication* ALinkEngine::CreateApplication() { return new SandBox(); }
