@@ -1,10 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
-project(ALink)
+project(ALink C CXX)
 
-SET(CMAKE_CXX_FLAGS "-std=gnu++17")
+set(CMAKE_CXX_STANDARD 17)
 
+add_definitions(-DALINK_DEBUG)
 
 include_directories(ALinkEngine)
+if (UNIX)
+  add_link_options("-pthread")
+endif (UNIX)
+
+
+
 
 add_subdirectory (ALinkEngine)
 add_subdirectory (ALinkSandbox)
