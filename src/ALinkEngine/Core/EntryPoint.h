@@ -4,14 +4,15 @@
 
 int main(int argc, char* argv[]) {
 
-  auto entry = ALinkEngine::CreateApplication();
-  entry->InternalInit(argc, argv);
-  entry->Init();
-  
-  entry->Run();
-  
-  entry->ShutDown();
-  delete entry;
+  auto app = ALinkEngine::CreateApplication();
+  app->InternalInit(argc, argv);
+  app->Init();
+  while (app->IsRunning()) {
+    app->InternalEvents();
+    app->Run();
+  }
+  app->ShutDown();
+  delete app;
 }
 
 
