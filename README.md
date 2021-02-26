@@ -2,7 +2,9 @@
 
 #### First cross-platform graphic engine designed specifically for developing Low-Code tools.
 
-Based on C++ and OpenGL.
+Based on C++ and OpenGL - especially on Hazel Engine.
+> https://github.com/TheCherno/Hazel
+
 ##### At the begining, why C++ instead of more High-Level solutions like Electron?
 The main goal is creating a reliable, expandable, and high-performace platform for Low-Code development
 with a lot features like software debugging, unit-testing, integrating with code editors and IDE's,
