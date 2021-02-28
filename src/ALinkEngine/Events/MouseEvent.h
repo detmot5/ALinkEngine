@@ -2,7 +2,7 @@
 #define ALINKENGINE_EVENTS_MOUSEEVENT_H_
 
 #include "Event.h"
-#include "ALinkEngine/Core/MouseCodes.h"
+#include "Core/MouseCodes.h"
 
 
 namespace ALinkEngine {

@@ -1,7 +1,7 @@
 #ifndef ALINKENGINE_EVENTS_KEYEVENT_H_
 #define ALINKENGINE_EVENTS_KEYEVENT_H_
 
-#include "ALinkEngine/Core/KeyCodes.h"
+#include "Core/KeyCodes.h"
 #include "Event.h"
 
 namespace ALinkEngine {

@@ -1,6 +1,6 @@
 #ifndef ALINKENGINE_CORE_KEYCODES_H_
 #define ALINKENGINE_CORE_KEYCODES_H_
-#include "ALinkEngine/alinkpch.h"
+#include "alinkpch.h"
 
 namespace ALinkEngine {
 using KeyCode = uint16_t;

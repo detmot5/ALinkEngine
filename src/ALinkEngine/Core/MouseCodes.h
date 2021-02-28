@@ -1,6 +1,6 @@
 #ifndef ALINKENGINE_CORE_MOUSECODES_H_
 #define ALINKENGINE_CORE_MOUSECODES_H_
-#include "ALinkEngine/alinkpch.h"
+#include "alinkpch.h"
 
 namespace ALinkEngine {
 	using MouseCode = uint16_t;
