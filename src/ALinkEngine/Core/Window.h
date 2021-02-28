@@ -37,6 +37,8 @@ class Window {
   void SetVSync(bool isEnabled);
   bool IsVSync() const;
 
+private:
+  void SetWindowEvents();
  private:
   WindowProps windowProps;
   GLFWwindow* windowHandle;
