@@ -19,15 +19,20 @@
     ALINK_LOG_ERROR("ALINK ASSERTION FAILED!"); \
     ALINK_LOG_ERROR(__VA_ARGS__)                \
   }
-#define ALINK_ENGINE_ASSERT(x, ...)                   \
-  if (!(x)) {                                         \
+#define ALINK_ENGINE_ASSERT(x, ...)                    \
+  if (!(x)) {                                          \
     ALINK_LOG_ERROR("ALINK ENGINE ASSERTION FAILED!"); \
-    ALINK_LOG_ERROR(__VA_ARGS__);                     \
+    ALINK_LOG_ERROR(__VA_ARGS__);                      \
   }
 #else
 #define ALINK_ASSERT(x, ...)
 #define ALINK_ENGINE_ASSERT(x, ...)
 #endif
+
+#define ALINK_BIND_EVENT_CALLBACK(fn)                       \
+  [this](auto&&... args) -> decltype(auto) {                \
+    return this->fn(std::forward<decltype(args)>(args)...); \
+  }
 
 #define BIT(x) (1 << x)
 
