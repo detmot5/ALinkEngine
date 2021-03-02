@@ -37,7 +37,7 @@ class Window {
   void SetVSync(bool isEnabled);
   bool IsVSync() const;
 
-private:
+ private:
   void SetWindowEvents();
  private:
   WindowProps windowProps;

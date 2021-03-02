@@ -33,6 +33,7 @@ Window::Window(const WindowProps& props) {
 
   glfwMakeContextCurrent(this->windowHandle);
   glfwSetWindowUserPointer(this->windowHandle, &this->windowProps);
+
   this->SetVSync(true);
   this->SetWindowEvents();
 }
