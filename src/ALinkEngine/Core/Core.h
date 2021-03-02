@@ -25,6 +25,7 @@
     ALINK_LOG_ERROR(__VA_ARGS__);                      \
   }
 #else
+#define ALINK_DEBUGBREAK()
 #define ALINK_ASSERT(x, ...)
 #define ALINK_ENGINE_ASSERT(x, ...)
 #endif
