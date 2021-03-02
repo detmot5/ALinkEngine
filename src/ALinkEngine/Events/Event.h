@@ -40,7 +40,7 @@ class Event {
  public:
 	virtual ~Event() = default;
 
-	bool Handled = false;
+	bool isHandled = false;
 
 	virtual EventType GetEventType() const = 0;
 	virtual const char* GetName() const = 0;
@@ -61,7 +61,7 @@ class EventDispatcher {
 	template<typename T, typename F>
 	bool Dispatch(const F& func) {
 		if (m_Event.GetEventType() == T::GetStaticType()) {
-			m_Event.Handled |= func(static_cast<T&>(m_Event));
+			m_Event.isHandled |= func(static_cast<T&>(m_Event));
 			return true;
 		}
 		return false;
