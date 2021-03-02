@@ -1,5 +1,4 @@
 #include "Application.h"
-
 namespace ALinkEngine {
 
 ALinkApplication::ALinkApplication() {}
@@ -14,12 +13,23 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnEvent));
 }
 
-void ALinkApplication::InternalEvents() { this->window->OnUpdate(); }
+void ALinkApplication::InternalEvents() {
+  this->window->OnUpdate();
+  for (auto layer : this->layerStack) {
+    layer->OnUpdate();
+  }
+}
 
 void ALinkApplication::OnEvent(Event& event) {
   EventDispatcher dispacher(event);
   dispacher.Dispatch<WindowCloseEvent>(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowCloseEvent));
+
+  for (auto it = this->layerStack.reverseBegin();
+       it != this->layerStack.reverseEnd(); it++) {
+    if (!event.isHandled)
+      (*it)->OnEvent(event);
+  }
 
   ALINK_LOG_INFO(event.ToString().c_str());
 }
