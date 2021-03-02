@@ -3,7 +3,6 @@
 #include "Application.h"
 
 int main(int argc, char* argv[]) {
-
   auto app = ALinkEngine::CreateApplication();
   app->InternalInit(argc, argv);
   app->Init();
