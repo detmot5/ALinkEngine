@@ -16,7 +16,7 @@ ImGuiLayer::~ImGuiLayer() {}
 void ImGuiLayer::OnAttach() {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImGui_ImplOpenGL3_Init("#version 430");
+  ImGui_ImplOpenGL3_Init("#version 330");
 }
 
 void ImGuiLayer::OnDetach() {}
