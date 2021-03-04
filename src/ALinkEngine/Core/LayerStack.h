@@ -6,7 +6,7 @@
 
 namespace ALinkEngine {
 
-using LayerStackDataStorage = std::vector<Layer*>; 
+using LayerStackDataStorage = std::list<Layer*>;
 
 class LayerStack {
  public:
@@ -18,8 +18,8 @@ class LayerStack {
   void DeleteOverlay(Layer* overlay);
   LayerStackDataStorage::iterator begin() { return layers.begin(); }
   LayerStackDataStorage::iterator end() { return layers.end(); }
-  LayerStackDataStorage::reverse_iterator reverseBegin() { return layers.rbegin(); }
-  LayerStackDataStorage::reverse_iterator reverseEnd() { return layers.rend(); }
+  LayerStackDataStorage::reverse_iterator rbegin() { return layers.rbegin(); }
+  LayerStackDataStorage::reverse_iterator rend() { return layers.rend(); }
 
  private:
   LayerStackDataStorage layers;
