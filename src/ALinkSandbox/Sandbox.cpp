@@ -13,7 +13,7 @@ class ExampleLayer : public ALinkEngine::Layer {
   }
 
   void OnEvent(ALinkEngine::Event& event) {
-    ALINK_LOG_WARN("Event from layer: %s", event.ToString().c_str());
+    
   }
 };
 
@@ -27,6 +27,7 @@ class SandBox : public ALinkEngine::ALinkApplication {
     ALINK_LOG_WARN("iiiiiiiiiiiiii %d", 20);
     ALINK_LOG_INFO("iiiiiiiiiiiiii %d", 400);
     this->AddLayer(new ExampleLayer("Dupa"));
+    this->AddLayer(new ALinkEngine::ImGuiLayer());
   }
 
   void ShutDown() override {}
