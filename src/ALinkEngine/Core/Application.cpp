@@ -1,7 +1,12 @@
 #include "Application.h"
+
 namespace ALinkEngine {
 
-ALinkApplication::ALinkApplication() {}
+ALinkApplication::ALinkApplication() {
+  ALINK_ENGINE_ASSERT(ALinkApplication::instance == nullptr,
+                      "There can be only one application!");
+  ALinkApplication::instance = this;                      
+}
 
 ALinkApplication::~ALinkApplication() {}
 
@@ -14,10 +19,24 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
 }
 
 void ALinkApplication::InternalEvents() {
-  this->window->OnUpdate();
+  // temporaty as fuck !
+  glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
+  
   for (auto layer : this->layerStack) {
     layer->OnUpdate();
   }
+  this->window->OnUpdate();
+}
+
+void ALinkApplication::AddLayer(Layer* layer) {
+  this->layerStack.AddLayer(layer);
+  layer->OnAttach();
+}
+
+void ALinkApplication::AddOverlay(Layer* overlay) {
+  this->AddOverlay(overlay);
+  overlay->OnAttach();
 }
 
 void ALinkApplication::OnEvent(Event& event) {
@@ -27,11 +46,8 @@ void ALinkApplication::OnEvent(Event& event) {
 
   for (auto it = this->layerStack.reverseBegin();
        it != this->layerStack.reverseEnd(); it++) {
-    if (!event.isHandled)
-      (*it)->OnEvent(event);
+    if (!event.isHandled) (*it)->OnEvent(event);
   }
-
-  ALINK_LOG_INFO(event.ToString().c_str());
 }
 
 bool ALinkApplication::OnWindowCloseEvent(WindowCloseEvent& event) {
