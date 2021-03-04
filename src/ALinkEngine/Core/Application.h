@@ -36,7 +36,7 @@ class ALinkApplication {
   bool OnWindowCloseEvent(WindowCloseEvent& event);
 
  private:
-  Scope<Window> window;
+  std::unique_ptr<Window> window;
   LayerStack layerStack;
   bool isRunning;
 
