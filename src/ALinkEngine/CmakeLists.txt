@@ -14,10 +14,8 @@ target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Events)
 
-# loguru 
-add_subdirectory(vendor/loguru)
-target_link_libraries(ALinkEngine loguru)
-
+#spdlog
+target_include_directories(ALinkEngine PUBLIC vendor/spdlog/include)
 
 #glfw and glad is linked globally because imgui also uses it
 
