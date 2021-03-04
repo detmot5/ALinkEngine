@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 file (GLOB ALinkEngineSRC 
   "Core/*.cpp"
+  "GUI/*.cpp"
   "*.cpp"
 )
 set(CMAKE_CXX_STANDARD 17)
@@ -13,22 +14,31 @@ target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Events)
 
-
+# loguru 
 add_subdirectory(vendor/loguru)
 target_link_libraries(ALinkEngine loguru)
-target_include_directories(ALinkEngine PUBLIC vendor/loguru)
 
+
+#glfw and glad is linked globally because imgui also uses it
+
+# glfw
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(vendor/glfw)
-target_link_libraries(ALinkEngine glfw)
+link_libraries(glfw)
 find_package(OpenGL REQUIRED)
-target_link_libraries(ALinkEngine OpenGL::GL)
+link_libraries(OpenGL::GL)
+add_definitions(-DGLFW_INCLUDE_NONE)
 
+
+# glad
 add_subdirectory(vendor/glad)
-target_link_libraries(ALinkEngine glad)
-target_include_directories(ALinkEngine PUBLIC glad/include)
+link_libraries(glad)
+
+# imgui
+add_subdirectory(vendor/imgui)
+target_link_libraries(ALinkEngine imgui)
 
 
