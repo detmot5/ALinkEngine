@@ -22,12 +22,13 @@ class ExampleLayer : public ALinkEngine::Layer {
 class SandBox : public ALinkEngine::ALinkApplication {
  public:
   void Init() override {
-    ALINK_LOG_WARN("tessst %d", 20);
-    ALINK_LOG_ERROR("Testtt %d", 50);
-    ALINK_LOG_WARN("iiiiiiiiiiiiii %d", 20);
-    ALINK_LOG_INFO("iiiiiiiiiiiiii %d", 400);
+    
+    ALINK_LOG_WARN("tessst {0}", 20);
+    ALINK_LOG_ERROR("Testtt {0}", 50);
+    ALINK_LOG_WARN("iiiiiiiiiiiiii {0}", 20);
+    ALINK_LOG_INFO("iiiiiiiiiiiiii {0}", 400);
     this->AddLayer(new ExampleLayer("Dupa"));
-    this->AddLayer(new ALinkEngine::ImGuiLayer());
+    this->AddOverlay(new ALinkEngine::ImGuiLayer());
   }
 
   void ShutDown() override {}
