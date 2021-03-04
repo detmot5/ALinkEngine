@@ -12,17 +12,23 @@
 #endif
 
 #ifdef ALINK_DEBUG
+#ifdef ALINK_PLATFORM_WINDOWS
+#define ALINK_DEBUGBREAK() __debugbreak()
+#else
 #include <csignal>
 #define ALINK_DEBUGBREAK() raise(SIGTRAP)
+#endif
 #define ALINK_ASSERT(x, ...)                    \
   if (!(x)) {                                   \
     ALINK_LOG_ERROR("ALINK ASSERTION FAILED!"); \
-    ALINK_LOG_ERROR(__VA_ARGS__)                \
+    ALINK_LOG_ERROR(__VA_ARGS__);               \
+    ALINK_DEBUGBREAK();                         \
   }
 #define ALINK_ENGINE_ASSERT(x, ...)                    \
   if (!(x)) {                                          \
     ALINK_LOG_ERROR("ALINK ENGINE ASSERTION FAILED!"); \
     ALINK_LOG_ERROR(__VA_ARGS__);                      \
+    ALINK_DEBUGBREAK();                                \
   }
 #else
 #define ALINK_DEBUGBREAK()
