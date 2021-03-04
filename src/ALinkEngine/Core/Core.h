@@ -24,11 +24,11 @@
     ALINK_LOG_ERROR(__VA_ARGS__);               \
     ALINK_DEBUGBREAK();                         \
   }
-#define ALINK_ENGINE_ASSERT(x, ...)                    \
-  if (!(x)) {                                          \
-    ALINK_LOG_ERROR("ALINK ENGINE ASSERTION FAILED!"); \
-    ALINK_LOG_ERROR(__VA_ARGS__);                      \
-    ALINK_DEBUGBREAK();                                \
+#define ALINK_ENGINE_ASSERT(x, ...)                              \
+  if (!(x)) {                                                    \
+    ALINK_ENGINE_LOG_CRITICAL("ALINK ENGINE ASSERTION FAILED!"); \
+    ALINK_ENGINE_LOG_CRITICAL(__VA_ARGS__);                      \
+    ALINK_DEBUGBREAK();                                          \
   }
 #else
 #define ALINK_DEBUGBREAK()

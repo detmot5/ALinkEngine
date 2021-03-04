@@ -5,14 +5,14 @@ namespace ALinkEngine {
 ALinkApplication::ALinkApplication() {
   ALINK_ENGINE_ASSERT(ALinkApplication::instance == nullptr,
                       "There can be only one application!");
-  ALinkApplication::instance = this;                      
+  ALinkApplication::instance = this;
 }
 
 ALinkApplication::~ALinkApplication() {}
 
 void ALinkApplication::InternalInit(int argc, char* argv[]) {
-  loguru::init(argc, argv);
-  this->window = CreateScope<Window>(WindowProps());
+  Logger::Init();
+  this->window = std::make_unique<Window>(WindowProps());
   this->isRunning = true;
   this->window->SetEventCallback(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnEvent));
@@ -35,7 +35,7 @@ void ALinkApplication::AddLayer(Layer* layer) {
 }
 
 void ALinkApplication::AddOverlay(Layer* overlay) {
-  this->AddOverlay(overlay);
+  this->layerStack.AddOverlay(overlay);
   overlay->OnAttach();
 }
 
@@ -44,8 +44,8 @@ void ALinkApplication::OnEvent(Event& event) {
   dispacher.Dispatch<WindowCloseEvent>(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowCloseEvent));
 
-  for (auto it = this->layerStack.reverseBegin();
-       it != this->layerStack.reverseEnd(); it++) {
+  for (auto it = this->layerStack.rbegin();
+       it != this->layerStack.rend(); it++) {
     if (!event.isHandled) (*it)->OnEvent(event);
   }
 }

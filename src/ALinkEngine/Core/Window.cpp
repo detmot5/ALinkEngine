@@ -10,14 +10,14 @@ namespace ALinkEngine {
 static bool isGLFWInitialized = false;
 
 static void GLFWErrorCallback(int error, const char* description) {
-  ALINK_LOG_ERROR("GLFW Error: (%d): %s", error, description);
+  ALINK_ENGINE_LOG_ERROR("GLFW Error: (%d): %s", error, description);
 }
 
 Window::Window(const WindowProps& props) {
   this->windowProps.Title = props.Title;
   this->windowProps.Width = props.Width;
   this->windowProps.Height = props.Height;
-  ALINK_LOG_INFO("Creating window %s with size: %ux%u",
+  ALINK_ENGINE_LOG_INFO("Creating window {0} with size: {1}x{2}",
                  this->windowProps.Title.c_str(), this->windowProps.Width,
                  this->windowProps.Height);
 
@@ -67,6 +67,7 @@ void Window::SetWindowEvents() {
             reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window));
         props->Width = width;
         props->Height = height;
+        glfwSetWindowSize(window, width, height);
         WindowResizeEvent event(width, height);
         props->eventCallback(event);
       });
