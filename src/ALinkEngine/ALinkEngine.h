@@ -6,6 +6,8 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/Event.h"
 
+#include "GUI/ImGuiLayer.h"
+
 #include "Core/Logger.h"
 #include "Core/EntryPoint.h"
 #include "Core/Application.h"
