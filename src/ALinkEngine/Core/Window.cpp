@@ -1,5 +1,6 @@
-#include "Window.h"
+#include <glad/glad.h>
 
+#include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
@@ -12,7 +13,6 @@ static void GLFWErrorCallback(int error, const char* description) {
   ALINK_LOG_ERROR("GLFW Error: (%d): %s", error, description);
 }
 
-
 Window::Window(const WindowProps& props) {
   this->windowProps.Title = props.Title;
   this->windowProps.Width = props.Width;
@@ -20,7 +20,7 @@ Window::Window(const WindowProps& props) {
   ALINK_LOG_INFO("Creating window %s with size: %ux%u",
                  this->windowProps.Title.c_str(), this->windowProps.Width,
                  this->windowProps.Height);
-  
+
   if (!isGLFWInitialized) {
     int isSuccess = glfwInit();
     ALINK_ENGINE_ASSERT(isSuccess, "Could not initialize GLFW");
@@ -32,8 +32,10 @@ Window::Window(const WindowProps& props) {
                        this->windowProps.Title.c_str(), nullptr, nullptr);
 
   glfwMakeContextCurrent(this->windowHandle);
+  int status =
+      gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
   glfwSetWindowUserPointer(this->windowHandle, &this->windowProps);
-
+  ALINK_ENGINE_ASSERT(status, "Could not load GLAD");
   this->SetVSync(true);
   this->SetWindowEvents();
 }
@@ -59,7 +61,7 @@ void Window::SetVSync(bool isEnabled) {
 bool Window::IsVSync() const { return windowProps.isVsync; }
 
 void Window::SetWindowEvents() {
-    glfwSetWindowSizeCallback(
+  glfwSetWindowSizeCallback(
       this->windowHandle, [](GLFWwindow* window, int width, int height) {
         WindowProps* props =
             reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window));
@@ -117,17 +119,20 @@ void Window::SetWindowEvents() {
           }
         }
       });
-  
-  glfwSetScrollCallback(this->windowHandle, [] (GLFWwindow* window, double xOffset, double yOffset) {
+
+  glfwSetScrollCallback(this->windowHandle, [](GLFWwindow* window,
+                                               double xOffset, double yOffset) {
     WindowProps* props =
-      reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window));
-    MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
+        reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window));
+    MouseScrolledEvent event(static_cast<float>(xOffset),
+                             static_cast<float>(yOffset));
     props->eventCallback(event);
   });
 
-  glfwSetCursorPosCallback(this->windowHandle, [] (GLFWwindow* window, double xPos, double yPos) {
+  glfwSetCursorPosCallback(this->windowHandle, [](GLFWwindow* window,
+                                                  double xPos, double yPos) {
     WindowProps* props =
-      reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window)); 
+        reinterpret_cast<WindowProps*>(glfwGetWindowUserPointer(window));
     MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
     props->eventCallback(event);
   });

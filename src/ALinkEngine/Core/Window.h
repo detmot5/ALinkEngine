@@ -1,6 +1,7 @@
 #ifndef ALINKENGINE_CORE_WINDOW_H_
 #define ALINKENGINE_CORE_WINDOW_H_
 // Based on Hazel but without abstraciotn - ALink will always use GLFW
+
 #include <GLFW/glfw3.h>
 
 #include "Core/Core.h"
