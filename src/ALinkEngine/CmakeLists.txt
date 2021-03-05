@@ -35,8 +35,12 @@ add_definitions(-DGLFW_INCLUDE_NONE)
 add_subdirectory(vendor/glad)
 link_libraries(glad)
 
+#glm
+target_include_directories(ALinkEngine PUBLIC vendor/glm)
+
 # imgui
 add_subdirectory(vendor/imgui)
 target_link_libraries(ALinkEngine imgui)
+
 
 
