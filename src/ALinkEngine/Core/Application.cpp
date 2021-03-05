@@ -16,16 +16,25 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
   this->isRunning = true;
   this->window->SetEventCallback(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnEvent));
+  this->imGuiLayer = new ImGuiLayer();
+  this->AddOverlay(this->imGuiLayer);
 }
 
 void ALinkApplication::InternalEvents() {
   // temporaty as fuck !
   glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
-  
+
   for (auto layer : this->layerStack) {
     layer->OnUpdate();
   }
+
+  this->imGuiLayer->Begin();
+  for (auto layer : this->layerStack) {
+    layer->OnImGuiRender();
+  }
+  this->imGuiLayer->End();
+
   this->window->OnUpdate();
 }
 

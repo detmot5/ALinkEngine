@@ -6,6 +6,7 @@
 #include "Core/LayerStack.h"
 #include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
+#include "GUI/ImGuiLayer.h"
 #include "alinkpch.h"
 
 namespace ALinkEngine {
@@ -37,6 +38,7 @@ class ALinkApplication {
 
  private:
   std::unique_ptr<Window> window;
+  ImGuiLayer* imGuiLayer;
   LayerStack layerStack;
   bool isRunning;
 
