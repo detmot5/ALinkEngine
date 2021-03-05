@@ -6,7 +6,7 @@
 
 namespace ALinkEngine {
 
-using LayerStackDataStorage = std::list<Layer*>;
+using LayerStackDataStorage = std::vector<Layer*>;
 
 class LayerStack {
  public:
@@ -23,7 +23,7 @@ class LayerStack {
 
  private:
   LayerStackDataStorage layers;
-  LayerStackDataStorage::iterator lastLayerPosition;
+  size_t lastLayerIndex;
 };
 
 }  // namespace ALinkEngine
