@@ -32,7 +32,7 @@ class Window {
 
   inline uint32_t GetWidth() const { return windowProps.Width; }
   inline uint32_t GetHeight() const { return windowProps.Height; }
-
+  inline GLFWwindow* GetWindowHandle() { return windowHandle; }
   // Window attributes
   void SetEventCallback(const EventCallbackFn& callback);
   void SetVSync(bool isEnabled);
