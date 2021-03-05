@@ -12,9 +12,19 @@ class ExampleLayer : public ALinkEngine::Layer {
     
   }
 
-  void OnEvent(ALinkEngine::Event& event) {
+  void OnEvent(ALinkEngine::Event& event) override {
     
   }
+
+  void OnImGuiRender() override {
+    ImGui::Begin("Doopa");
+    
+    if (ImGui::Button("click")) {
+      ALINK_LOG_INFO("Ouch");
+    }
+    ImGui::End();
+  }
+
 };
 
 
@@ -28,7 +38,6 @@ class SandBox : public ALinkEngine::ALinkApplication {
     ALINK_LOG_WARN("iiiiiiiiiiiiii {0}", 20);
     ALINK_LOG_INFO("iiiiiiiiiiiiii {0}", 400);
     this->AddLayer(new ExampleLayer("Dupa"));
-    this->AddOverlay(new ALinkEngine::ImGuiLayer());
   }
 
   void ShutDown() override {}
