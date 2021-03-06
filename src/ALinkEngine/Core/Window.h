@@ -4,8 +4,10 @@
 
 #include <GLFW/glfw3.h>
 
+
 #include "Core/Core.h"
 #include "Events/Event.h"
+#include "Renderer/GraphicsContext.h"
 #include "alinkpch.h"
 
 namespace ALinkEngine {
@@ -43,6 +45,7 @@ class Window {
  private:
   WindowProps windowProps;
   GLFWwindow* windowHandle;
+  GraphicsContext* graphicsContext;
 };
 }  // namespace ALinkEngine
 

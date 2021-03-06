@@ -1,9 +1,9 @@
-#include <glad/glad.h>
-
 #include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
+
+#include "GraphicsAPI/OpenGL/OpenGLContext.h"
 
 namespace ALinkEngine {
 
@@ -31,11 +31,9 @@ Window::Window(const WindowProps& props) {
                        static_cast<int>(this->windowProps.Height),
                        this->windowProps.Title.c_str(), nullptr, nullptr);
 
-  glfwMakeContextCurrent(this->windowHandle);
-  int status =
-      gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+  this->graphicsContext = new OpenGLContext(this->windowHandle);
+  this->graphicsContext->Init();
   glfwSetWindowUserPointer(this->windowHandle, &this->windowProps);
-  ALINK_ENGINE_ASSERT(status, "Could not load GLAD");
   this->SetVSync(true);
   this->SetWindowEvents();
 }
@@ -46,7 +44,7 @@ void Window::ShutDown() { glfwDestroyWindow(this->windowHandle); }
 
 void Window::OnUpdate() {
   glfwPollEvents();
-  glfwSwapBuffers(this->windowHandle);
+  this->graphicsContext->SwapBuffers();
 }
 
 void Window::SetEventCallback(const EventCallbackFn& callback) {
