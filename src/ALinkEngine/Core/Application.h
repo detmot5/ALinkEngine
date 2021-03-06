@@ -7,6 +7,8 @@
 #include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
 #include "GUI/ImGuiLayer.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Buffer.h"
 #include "alinkpch.h"
 
 namespace ALinkEngine {
@@ -41,6 +43,10 @@ class ALinkApplication {
   ImGuiLayer* imGuiLayer;
   LayerStack layerStack;
   bool isRunning;
+  std::unique_ptr<Shader> shader;
+  std::unique_ptr<VertexBuffer> vertexBuffer;
+  std::unique_ptr<IndexBuffer> indexBuffer;
+  uint32_t vertexArray;
 
   static inline ALinkApplication* instance = nullptr;
 };
