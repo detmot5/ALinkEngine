@@ -1,7 +1,6 @@
 #ifndef ALINKENGINE_RENDERER_SHADER_H_
 #define ALINKENGINE_RENDERER_SHADER_H_
-#include "alinkpch.h"
-
+#include <glm/glm.hpp>
 namespace ALinkEngine {
 
 class Shader {
@@ -10,6 +9,7 @@ class Shader {
   ~Shader();
   void Bind();
   void Unbind();
+  void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
  private:
   uint32_t rendererID;
 };

@@ -31,7 +31,7 @@ Window::Window(const WindowProps& props) {
                        static_cast<int>(this->windowProps.Height),
                        this->windowProps.Title.c_str(), nullptr, nullptr);
 
-  this->graphicsContext = new OpenGLContext(this->windowHandle);
+  this->graphicsContext.reset(new OpenGLContext(this->windowHandle));
   this->graphicsContext->Init();
   glfwSetWindowUserPointer(this->windowHandle, &this->windowProps);
   this->SetVSync(true);
@@ -66,6 +66,7 @@ void Window::SetWindowEvents() {
         props->Width = width;
         props->Height = height;
         glfwSetWindowSize(window, width, height);
+        
         WindowResizeEvent event(width, height);
         props->eventCallback(event);
       });

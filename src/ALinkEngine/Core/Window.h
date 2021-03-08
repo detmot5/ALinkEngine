@@ -45,7 +45,7 @@ class Window {
  private:
   WindowProps windowProps;
   GLFWwindow* windowHandle;
-  GraphicsContext* graphicsContext;
+  std::unique_ptr<GraphicsContext> graphicsContext;
 };
 }  // namespace ALinkEngine
 

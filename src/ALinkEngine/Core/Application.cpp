@@ -1,8 +1,13 @@
+#include "alinkpch.h"
 #include "Application.h"
+#include "Renderer/Renderer.h"
+#include <glad/glad.h>
 
 namespace ALinkEngine {
 
-ALinkApplication::ALinkApplication() {
+ALinkApplication::ALinkApplication() :
+  camera(-1.6f, 1.6f, -0.9f, 0.9f) {
+  Logger::Init();
   ALINK_ENGINE_ASSERT(ALinkApplication::instance == nullptr,
                       "There can be only one application!");
   ALinkApplication::instance = this;
@@ -11,7 +16,6 @@ ALinkApplication::ALinkApplication() {
 ALinkApplication::~ALinkApplication() {}
 
 void ALinkApplication::InternalInit(int argc, char* argv[]) {
-  Logger::Init();
   this->window = std::make_unique<Window>(WindowProps());
   this->isRunning = true;
   this->window->SetEventCallback(
@@ -31,32 +35,41 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
       2,
   };
 
-  glGenVertexArrays(1, &this->vertexArray);
-  glBindVertexArray(this->vertexArray);
-  this->vertexBuffer.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
-  this->indexBuffer.reset(IndexBuffer::Create(indicies, 3));
-  
+  this->vertexArray = VertexArray::Create();
+  std::shared_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(verticies, sizeof(verticies));
+  std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(indicies, 3);
   vertexBuffer->SetLayout({
     {ShaderDataType::Float3, "a_Position"},
     {ShaderDataType::Float4, "a_Color"},
   });
-  
 
-  const auto& layout = vertexBuffer->GetLayout();
-  uint32_t index = 0;
-  for (const auto& element : layout) {
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(
-      index,
-      BufferElement::GetComponentElementsCount(element.type),
-      GL_FLOAT,
-      element.isNormalized ? GL_TRUE : GL_FALSE,
-      layout.GetStride(),
-      (const void*) element.offset);
-    index++;
-  }
+  this->vertexArray->AddVertexBuffer(vertexBuffer);
+  this->vertexArray->SetIndexBuffer(indexBuffer);
 
-  glEnableVertexAttribArray(0);
+
+  this->squareVA = VertexArray::Create();
+
+  float sqverticies[4 * 7] = {
+    -0.75f, -0.75f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
+     0.75f, -0.75f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
+     0.75f,  0.75f, 1.0f,  0.0f, 1.0f, 1.0f, 1.0f,
+    -0.75f,  0.75f, 1.0f,  0.0f, 1.0f, 1.0f, 1.0f
+  };
+
+  std::shared_ptr<VertexBuffer> squareVB = VertexBuffer::Create(sqverticies, sizeof(sqverticies));
+  squareVB->SetLayout({
+    {ShaderDataType::Float3, "a_Position"},
+    {ShaderDataType::Float4, "a_Color"},
+  });
+  squareVA->AddVertexBuffer(squareVB);
+  uint32_t sqindicies[] = {
+      0, 1, 2,
+      2, 3, 0
+  };
+
+  std::shared_ptr<IndexBuffer> squareIB = IndexBuffer::Create(sqindicies, 6);
+  squareVA->SetIndexBuffer(squareIB);
+
 
 
   std::string vertexSrc = R"(
@@ -66,10 +79,11 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
     out vec3 v_Position;
     out vec4 v_Color;
 
+    uniform mat4 u_ViewProjection;
     void main() {
       v_Position = a_Position;
       v_Color = a_Color;
-      gl_Position = vec4(a_Position, 1.0);
+      gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
       
     }
   )";
@@ -89,14 +103,7 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
 }
 
 void ALinkApplication::InternalEvents() {
-  // temporaty as fuck !
-  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
-  this->shader->Bind();
-  glBindVertexArray(this->vertexArray);
-  glDrawElements(GL_TRIANGLES, this->indexBuffer->GetCount(), GL_UNSIGNED_INT,
-                 nullptr);
-
+  glViewport(0, 0, this->window->GetWidth(), this->window->GetHeight());
   for (auto layer : this->layerStack) {
     layer->OnUpdate();
   }
@@ -124,6 +131,8 @@ void ALinkApplication::OnEvent(Event& event) {
   EventDispatcher dispacher(event);
   dispacher.Dispatch<WindowCloseEvent>(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowCloseEvent));
+  dispacher.Dispatch<KeyPressedEvent>(
+      ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnKeyPressedEvent));
 
   for (auto it = this->layerStack.rbegin(); it != this->layerStack.rend();
        it++) {
@@ -134,6 +143,30 @@ void ALinkApplication::OnEvent(Event& event) {
 bool ALinkApplication::OnWindowCloseEvent(WindowCloseEvent& event) {
   this->isRunning = false;
   return true;
+}
+
+bool ALinkApplication::OnKeyPressedEvent(KeyPressedEvent& event) {
+  auto keyCode = event.GetKeyCode();
+  if (keyCode == Key::W) {
+    auto pos = camera.GetPosition();
+    pos.y += 0.02f;
+    camera.SetPosition(pos);
+  } else if (keyCode == Key::S) {
+    auto pos = camera.GetPosition();
+    pos.y -= 0.02f;
+    camera.SetPosition(pos);
+  } else if (keyCode == Key::A) {
+    auto pos = camera.GetPosition();
+    pos.x -= 0.02f;
+    camera.SetPosition(pos);
+  } else if (keyCode == Key::D) {
+    auto pos = camera.GetPosition();
+    pos.x += 0.02f;
+    camera.SetPosition(pos);
+  }
+
+
+  return false;
 }
 
 }  // namespace ALinkEngine

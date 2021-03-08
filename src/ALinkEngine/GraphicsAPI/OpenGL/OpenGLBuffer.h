@@ -1,7 +1,6 @@
 #ifndef ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLBUFFER_H_
 #define ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLBUFFER_H_
 #include "Renderer/Buffer.h"
-#include "alinkpch.h"
 namespace ALinkEngine {
 class OpenGLVertexBuffer : public VertexBuffer {
  public:

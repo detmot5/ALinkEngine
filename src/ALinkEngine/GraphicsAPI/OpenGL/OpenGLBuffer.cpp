@@ -1,3 +1,4 @@
+#include "alinkpch.h"
 #include "OpenGLBuffer.h"
 
 #include <glad/glad.h>

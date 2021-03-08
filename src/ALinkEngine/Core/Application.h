@@ -1,15 +1,13 @@
 #ifndef ALINKENGINE_CORE_APPLICATION_H_
 #define ALINKENGINE_CORE_APPLICATION_H_
-#include <glad/glad.h>
-
-#include "Core/Core.h"
 #include "Core/LayerStack.h"
 #include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
 #include "GUI/ImGuiLayer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
-#include "alinkpch.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/OrthographicCamera.h"
 
 namespace ALinkEngine {
 
@@ -37,18 +35,16 @@ class ALinkApplication {
  private:
   void OnEvent(Event& event);
   bool OnWindowCloseEvent(WindowCloseEvent& event);
+  bool OnKeyPressedEvent(KeyPressedEvent& event);
 
  private:
   std::unique_ptr<Window> window;
   ImGuiLayer* imGuiLayer;
   LayerStack layerStack;
   bool isRunning;
-  std::unique_ptr<Shader> shader;
-  std::unique_ptr<VertexBuffer> vertexBuffer;
-  std::unique_ptr<IndexBuffer> indexBuffer;
-  uint32_t vertexArray;
 
   static inline ALinkApplication* instance = nullptr;
+
 };
 
 ALinkApplication* CreateApplication();

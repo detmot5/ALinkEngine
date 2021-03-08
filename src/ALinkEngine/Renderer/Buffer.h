@@ -1,6 +1,5 @@
 #ifndef ALINKENGINE_RENDERER_BUFFER_H_
 #define ALINKENGINE_RENDERER_BUFFER_H_
-#include "alinkpch.h"
 
 namespace ALinkEngine {
 
@@ -52,7 +51,7 @@ struct BufferElement {
       size(GetShaderDataTypeSize(type)),
       isNormalized(isNormalized) {}
       
-  static uint32_t GetComponentElementsCount(ShaderDataType type) {
+  static uint32_t GetElementsCount(ShaderDataType type) {
     switch (type) {
       case ShaderDataType::Float:   return 1;
       case ShaderDataType::Float2:  return 2;
@@ -111,7 +110,7 @@ class VertexBuffer {
   virtual void SetLayout(const BufferLayout& layout) = 0;
   virtual const BufferLayout& GetLayout() const = 0;
 
-  static VertexBuffer* Create(float* verticies, uint32_t size);
+  static std::shared_ptr<VertexBuffer> Create(float* verticies, uint32_t size);
 };
 
 class IndexBuffer {
@@ -121,7 +120,7 @@ class IndexBuffer {
   virtual void Unbind() const = 0;
   virtual uint32_t GetCount() const = 0;
 
-  static IndexBuffer* Create(uint32_t* indicies, uint32_t count);
+  static std::shared_ptr<IndexBuffer> Create(uint32_t* indicies, uint32_t count);
 };
 
 }  // namespace ALinkEngine

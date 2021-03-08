@@ -1,17 +1,25 @@
 #ifndef ALINKENGINE_RENDERER_RENDERER_H_
 #define ALINKENGINE_RENDERER_RENDERER_H_
+#include <glm/glm.hpp>
+#include "Renderer/VertexArray.h"
+#include "Renderer/RenderCommand.h"
+#include "Renderer/OrthographicCamera.h"
+#include "Renderer/Shader.h"
 namespace ALinkEngine {
 
-enum class RendererAPI {
-  None = 0,
-  OpenGL = 1,
+struct SceneData {
+  glm::mat4 viewProjectionMatrix;
 };
 
 class Renderer {
  public:
-  static inline RendererAPI GetAPI() { return currentAPI; }
+  static void BeginScene(const OrthographicCamera& camera);
+  static void EndScene();
+  static void Submit(const std::shared_ptr<Shader>& shader,
+                      const std::shared_ptr<VertexArray>& vertexArray);
  private:
-  static inline RendererAPI currentAPI = RendererAPI::OpenGL;  // for now
+  static inline std::unique_ptr<SceneData> sceneData =
+                                             std::make_unique<SceneData>();
 };
 }  // namespace ALinkEngine
 
