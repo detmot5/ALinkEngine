@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace ALinkEngine {
+namespace ALink {
 // VertexBuffer
 OpenGLVertexBuffer::OpenGLVertexBuffer(float* verticies, uint32_t size) {
   glGenBuffers(1, &this->rendererID);
@@ -39,4 +39,4 @@ void OpenGLIndexBuffer::Bind() const {
 void OpenGLIndexBuffer::Unbind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->rendererID);
 }
-}  // namespace ALinkEngine
+}  // namespace ALink

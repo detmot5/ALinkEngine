@@ -9,7 +9,7 @@
 #include "Core/Core.h"
 #include "alinkpch.h"
 
-namespace ALinkEngine {
+namespace ALink {
 ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
 ImGuiLayer::~ImGuiLayer() {}
@@ -72,4 +72,4 @@ void ImGuiLayer::End() {
 
 
 
-}  // namespace ALinkEngine
+}  // namespace ALink

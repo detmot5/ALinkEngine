@@ -6,7 +6,7 @@
 #include "alinkpch.h"
 
 
-namespace ALinkEngine {
+namespace ALink {
 
 	// Events are currently blocking, meaning when an event occurs it
 	// immediately gets dispatched and must be dealt with right then an there.

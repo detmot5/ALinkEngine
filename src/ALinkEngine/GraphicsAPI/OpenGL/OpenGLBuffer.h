@@ -1,7 +1,7 @@
 #ifndef ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLBUFFER_H_
 #define ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLBUFFER_H_
 #include "Renderer/Buffer.h"
-namespace ALinkEngine {
+namespace ALink {
 class OpenGLVertexBuffer : public VertexBuffer {
  public:
   OpenGLVertexBuffer(float* verticies, uint32_t size);
@@ -27,7 +27,7 @@ class OpenGLIndexBuffer : public IndexBuffer {
   uint32_t rendererID;
   uint32_t count;
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 
 

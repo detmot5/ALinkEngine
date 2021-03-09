@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include "Renderer/VertexArray.h"
 
-namespace ALinkEngine {
+namespace ALink {
 class RendererAPI {
  public:
   virtual void Clear() = 0;
@@ -13,7 +13,7 @@ class RendererAPI {
  private:
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_RENDERER_RENDERERAPI_H_
 

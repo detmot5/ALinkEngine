@@ -4,11 +4,11 @@
 #include "GraphicsAPI/OpenGL/OpenGLRendererAPI.h"
 #endif  // ALINK_GL_OPENGL
 
-namespace ALinkEngine {
+namespace ALink {
 #ifdef ALINK_GL_OPENGL
 std::unique_ptr<RendererAPI> RenderCommand::rendererAPI =
                                             std::make_unique<OpenGLRendererAPI>();
 #endif  // ALINK_GL_OPENGL
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 

@@ -1,7 +1,7 @@
 #ifndef ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLVERTEXARRAY_H_
 #define ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLVERTEXARRAY_H_
 #include "Renderer/VertexArray.h"
-namespace ALinkEngine {
+namespace ALink {
 
 class OpenGLVertexArray : public VertexArray {
  public:
@@ -25,6 +25,6 @@ class OpenGLVertexArray : public VertexArray {
   std::shared_ptr<IndexBuffer> indexBuffer;
   uint32_t rendererID;
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_GRAPHICSAPI_OPENGL_OPENGLVERTEXARRAY_H_

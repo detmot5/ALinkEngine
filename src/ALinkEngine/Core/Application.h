@@ -3,13 +3,10 @@
 #include "Core/LayerStack.h"
 #include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
+#include "Core/TimeStep.h"
 #include "GUI/ImGuiLayer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/OrthographicCamera.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 // ALinkApplication is a singleton but with public constructor
 // When user is trying to create second instance application should crash
@@ -42,12 +39,12 @@ class ALinkApplication {
   ImGuiLayer* imGuiLayer;
   LayerStack layerStack;
   bool isRunning;
-
+  float lastFrameTime = 0.0f;
   static inline ALinkApplication* instance = nullptr;
 
 };
 
 ALinkApplication* CreateApplication();
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_CORE_APPLICATION_H_

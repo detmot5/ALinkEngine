@@ -11,12 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(ALinkEngine ${ALinkEngineSRC})
 
-target_precompile_headers(ALinkEngine PUBLIC alinkpch.h)
-target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
-target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Events)
-target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Renderer)
-
 #spdlog
 target_include_directories(ALinkEngine PUBLIC vendor/spdlog/include)
 
@@ -44,6 +38,12 @@ target_include_directories(ALinkEngine PUBLIC vendor/glm)
 # imgui
 add_subdirectory(vendor/imgui)
 target_link_libraries(ALinkEngine imgui)
+
+target_precompile_headers(ALinkEngine PUBLIC alinkpch.h)
+target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
+target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Events)
+target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Renderer)
 
 
 

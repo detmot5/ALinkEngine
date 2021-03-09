@@ -5,7 +5,7 @@
 #include "Core/MouseCodes.h"
 
 
-namespace ALinkEngine {
+namespace ALink {
 
 class MouseMovedEvent : public Event {
  public:

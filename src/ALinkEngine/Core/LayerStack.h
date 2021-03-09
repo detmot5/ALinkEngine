@@ -2,9 +2,8 @@
 #define ALINKENGINE_CORE_LAYERSTACK_H_
 
 #include "Core/Layer.h"
-#include "alinkpch.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 using LayerStackDataStorage = std::vector<Layer*>;
 
@@ -26,6 +25,6 @@ class LayerStack {
   size_t lastLayerIndex;
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_CORE_LAYERSTACK_H_

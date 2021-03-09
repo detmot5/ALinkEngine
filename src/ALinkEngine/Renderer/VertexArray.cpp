@@ -7,7 +7,7 @@
 
 #include "Renderer/Renderer.h"
 #include "Renderer/RendererAPI.h"
-namespace ALinkEngine {
+namespace ALink {
 std::shared_ptr<VertexArray> VertexArray::Create() {
 #ifdef ALINK_GL_OPENGL
   return std::make_shared<OpenGLVertexArray>();
@@ -15,4 +15,4 @@ std::shared_ptr<VertexArray> VertexArray::Create() {
 #error "ALINK_GL not defined! Please define API what ALink should use eg. ALINK_GL_OPENGL"
 #endif  // ALINK_GL_OPENGL
 }
-}  // namespace ALinkEngine
+}  // namespace ALink

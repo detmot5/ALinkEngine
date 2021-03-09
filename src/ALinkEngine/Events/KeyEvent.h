@@ -4,7 +4,7 @@
 #include "Core/KeyCodes.h"
 #include "Event.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class KeyEvent : public Event {
  public:
@@ -61,5 +61,5 @@ class KeyTypedEvent : public KeyEvent {
 
   EVENT_CLASS_TYPE(KeyTyped)
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 #endif  // ALINKENGINE_EVENTS_KEYEVENT_H_

@@ -5,12 +5,12 @@
 
 #include "alinkpch.h"
 
-namespace ALinkEngine {
+namespace ALink {
 class Logger {
  public:
   static inline void Init() {
     spdlog::set_pattern("%^[%n - %l] [Thread - %t] - %v%$");
-    engineLogger = spdlog::stdout_color_mt("ALinkEngine");
+    engineLogger = spdlog::stdout_color_mt("ALink");
     engineLogger->set_level(spdlog::level::trace);
     applicationLogger = spdlog::stdout_color_mt("ALinkApp");
     applicationLogger->set_level(spdlog::level::trace);
@@ -27,21 +27,21 @@ class Logger {
   static inline std::shared_ptr<spdlog::logger> applicationLogger;
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 // Core log macros
-#define ALINK_ENGINE_LOG_TRACE(...)    ::ALinkEngine::Logger::GetEngineLogger()->trace(__VA_ARGS__)
-#define ALINK_ENGINE_LOG_INFO(...)     ::ALinkEngine::Logger::GetEngineLogger()->info(__VA_ARGS__)
-#define ALINK_ENGINE_LOG_WARN(...)     ::ALinkEngine::Logger::GetEngineLogger()->warn(__VA_ARGS__)
-#define ALINK_ENGINE_LOG_ERROR(...)    ::ALinkEngine::Logger::GetEngineLogger()->error(__VA_ARGS__)
-#define ALINK_ENGINE_LOG_CRITICAL(...) ::ALinkEngine::Logger::GetEngineLogger()->critical(__VA_ARGS__)
+#define ALINK_ENGINE_LOG_TRACE(...)    ::ALink::Logger::GetEngineLogger()->trace(__VA_ARGS__)
+#define ALINK_ENGINE_LOG_INFO(...)     ::ALink::Logger::GetEngineLogger()->info(__VA_ARGS__)
+#define ALINK_ENGINE_LOG_WARN(...)     ::ALink::Logger::GetEngineLogger()->warn(__VA_ARGS__)
+#define ALINK_ENGINE_LOG_ERROR(...)    ::ALink::Logger::GetEngineLogger()->error(__VA_ARGS__)
+#define ALINK_ENGINE_LOG_CRITICAL(...) ::ALink::Logger::GetEngineLogger()->critical(__VA_ARGS__)
 
 // Client log macros
-#define ALINK_LOG_TRACE(...)           ::ALinkEngine::Logger::GetAppLogger()->trace(__VA_ARGS__)
-#define ALINK_LOG_INFO(...)            ::ALinkEngine::Logger::GetAppLogger()->info(__VA_ARGS__)
-#define ALINK_LOG_WARN(...)            ::ALinkEngine::Logger::GetAppLogger()->warn(__VA_ARGS__)
-#define ALINK_LOG_ERROR(...)           ::ALinkEngine::Logger::GetAppLogger()->error(__VA_ARGS__)
-#define ALINK_LOG_CRITICAL(...)        ::ALinkEngine::Logger::GetAppLogger()->critical(__VA_ARGS__)
+#define ALINK_LOG_TRACE(...)           ::ALink::Logger::GetAppLogger()->trace(__VA_ARGS__)
+#define ALINK_LOG_INFO(...)            ::ALink::Logger::GetAppLogger()->info(__VA_ARGS__)
+#define ALINK_LOG_WARN(...)            ::ALink::Logger::GetAppLogger()->warn(__VA_ARGS__)
+#define ALINK_LOG_ERROR(...)           ::ALink::Logger::GetAppLogger()->error(__VA_ARGS__)
+#define ALINK_LOG_CRITICAL(...)        ::ALink::Logger::GetAppLogger()->critical(__VA_ARGS__)
 
 
 #endif  // ALINKENGINE_CORE_LOGGER_H_

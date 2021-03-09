@@ -2,7 +2,7 @@
 #define ALINKENGINE_RENDERER_VERTEXARRAY_H_
 #include "Renderer/Buffer.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class VertexArray {
  public:
@@ -20,6 +20,6 @@ class VertexArray {
 
   static std::shared_ptr<VertexArray> Create();
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_RENDERER_VERTEXARRAY_H_

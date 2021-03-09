@@ -17,6 +17,8 @@
 #include "Core/EntryPoint.h"
 #include "Core/Application.h"
 #include "Core/Layer.h"
+#include "Core/Input.h"
+#include "Core/TimeStep.h"
 #include "Core/Core.h"
 
 // Renderer
@@ -27,4 +29,6 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer.h"
 
+
 #endif  // ALINKENGINE_ALINKENGINE_H_
+

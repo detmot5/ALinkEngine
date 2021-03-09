@@ -8,7 +8,7 @@
 #include "Renderer/Renderer.h"
 #include "Renderer/RendererAPI.h"
 
-namespace ALinkEngine {
+namespace ALink {
 std::shared_ptr<VertexBuffer> VertexBuffer::Create(float* verticies, uint32_t size) {
 #ifdef ALINK_GL_OPENGL
   return std::make_shared<OpenGLVertexBuffer>(verticies, size);
@@ -24,4 +24,4 @@ std::shared_ptr<IndexBuffer> IndexBuffer::Create(uint32_t* indicies, uint32_t co
 #error "ALINK_GL not defined! Please define graphics API what ALink should use. eg. ALINK_GL_OPENGL"
 #endif  // ALINK_GL_OPENGL
 }
-}  // namespace ALinkEngine
+}  // namespace ALink

@@ -2,7 +2,7 @@
 #define ALINKENGINE_CORE_KEYCODES_H_
 #include "alinkpch.h"
 
-namespace ALinkEngine {
+namespace ALink {
 using KeyCode = uint16_t;
 
 namespace Key {

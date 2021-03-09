@@ -5,7 +5,7 @@
 #include "Core/MouseCodes.h"
 
 
-namespace ALinkEngine {
+namespace ALink {
 
 class Input {
  public:
@@ -17,7 +17,7 @@ class Input {
 
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 
 #endif  // ALINKENGINE_CORE_INPUT_H_

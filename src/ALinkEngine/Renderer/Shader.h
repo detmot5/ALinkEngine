@@ -1,7 +1,7 @@
 #ifndef ALINKENGINE_RENDERER_SHADER_H_
 #define ALINKENGINE_RENDERER_SHADER_H_
 #include <glm/glm.hpp>
-namespace ALinkEngine {
+namespace ALink {
 
 class Shader {
  public:
@@ -14,7 +14,7 @@ class Shader {
   uint32_t rendererID;
 };
 
-} // namespace ALinkEngine
+}  // namespace ALink
 
 
 #endif  // ALINKENGINE_RENDERER_SHADER_H_

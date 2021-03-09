@@ -3,7 +3,7 @@
 
 #include "Event.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class WindowResizeEvent : public Event {
  public:

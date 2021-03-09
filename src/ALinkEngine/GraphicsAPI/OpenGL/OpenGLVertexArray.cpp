@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace ALinkEngine {
+namespace ALink {
 
 static GLenum ShaderDataTypeToOpenGLDataType(ShaderDataType type) {
   switch (type) {
@@ -69,4 +69,4 @@ void OpenGLVertexArray::SetIndexBuffer(
   indexBuffer->Bind();
   this->indexBuffer = indexBuffer;
 }
-}  // namespace ALinkEngine
+}  // namespace ALink

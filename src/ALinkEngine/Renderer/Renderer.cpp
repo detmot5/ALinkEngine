@@ -1,7 +1,7 @@
 #include "alinkpch.h"
 #include "Renderer.h"
 
-namespace ALinkEngine {
+namespace ALink {
 void Renderer::BeginScene(const OrthographicCamera& camera) {
   sceneData->viewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
@@ -18,4 +18,4 @@ void Renderer::Submit(const std::shared_ptr<Shader>& shader,
   RenderCommand::DrawIndexed(vertexArray);
 }
 
-}  // namespace ALinkEngine
+}  // namespace ALink

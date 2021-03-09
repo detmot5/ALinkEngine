@@ -1,7 +1,7 @@
 #ifndef ALINKENGINE_RENDERER_BUFFER_H_
 #define ALINKENGINE_RENDERER_BUFFER_H_
 
-namespace ALinkEngine {
+namespace ALink {
 
 enum class ShaderDataType {
   None = 0,
@@ -123,6 +123,6 @@ class IndexBuffer {
   static std::shared_ptr<IndexBuffer> Create(uint32_t* indicies, uint32_t count);
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
-#endif  // ALINKENGINE_RENDERER_BUFFER_H_
+#endif  // ALink_RENDERER_BUFFER_H_

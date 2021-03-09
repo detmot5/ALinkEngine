@@ -2,7 +2,7 @@
 #define ALINKENGINE_RENDERER_RENDERCOMMAND_H_
 #include "Renderer/RendererAPI.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class RenderCommand {
  public:
@@ -16,7 +16,9 @@ class RenderCommand {
 };
 
   
-} // namespace ALinkEngine
+}  // namespace ALink
 
 
 #endif  // ALINKENGINE_RENDERER_RENDERCOMMAND_H_
+
+

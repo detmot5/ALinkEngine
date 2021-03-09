@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include "Core/Application.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 bool Input::IsKeyPressed(KeyCode keyCode) {
   auto window = ALinkApplication::GetInstance().GetWindow().GetWindowHandle();
@@ -33,4 +33,4 @@ float Input::GetMouseY() {
   return yPos;
 }
   
-}  // namespace ALinkEngine
+}  // namespace ALink

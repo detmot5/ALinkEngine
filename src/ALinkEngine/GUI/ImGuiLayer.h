@@ -9,7 +9,7 @@
 #include "Events/KeyEvent.h"
 #include "Events/ApplicationEvent.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class ImGuiLayer : public Layer {
  public:
@@ -27,6 +27,7 @@ class ImGuiLayer : public Layer {
   
 };
 
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_GUI_IMGUILAYER_H_
+

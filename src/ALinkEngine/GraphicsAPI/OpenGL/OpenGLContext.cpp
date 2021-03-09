@@ -3,7 +3,7 @@
 #include "Core/Core.h"
 #include <glad/glad.h>
 
-namespace ALinkEngine {
+namespace ALink {
 OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
   : windowHandle(windowHandle) {
   ALINK_ENGINE_ASSERT(windowHandle, "OpenGL Context - window is nullptr");
@@ -23,4 +23,4 @@ void OpenGLContext::SwapBuffers() {
 }
 
 
-}  // namespace ALinkEngine
+}  // namespace ALink

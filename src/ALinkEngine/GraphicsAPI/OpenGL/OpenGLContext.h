@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include "Renderer/GraphicsContext.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 class OpenGLContext : public GraphicsContext {
  public:

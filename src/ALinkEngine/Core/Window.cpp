@@ -5,7 +5,7 @@
 
 #include "GraphicsAPI/OpenGL/OpenGLContext.h"
 
-namespace ALinkEngine {
+namespace ALink {
 
 static bool isGLFWInitialized = false;
 
@@ -138,4 +138,4 @@ void Window::SetWindowEvents() {
   });
 }
 
-}  // namespace ALinkEngine
+}  // namespace ALink

@@ -2,14 +2,14 @@
 #define ALINKENGINE_RENDERER_GRAPHICSCONTEXT_H_
 
 
-namespace ALinkEngine {
+namespace ALink {
 
 class GraphicsContext {
  public:
   virtual void Init() = 0;
   virtual void SwapBuffers() = 0;
 };
-} // namespace ALinkEngine
+} // namespace ALink
 
 
 #endif  // ALINKENGINE_RENDERER_GRAPHICSCONTEXT_H_

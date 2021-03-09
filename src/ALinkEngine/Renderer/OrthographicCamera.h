@@ -2,7 +2,7 @@
 #define ALINKENGINE_RENDERER_ORTHOGRAPHICCAMERA_H_
 #include <glm/glm.hpp>
 
-namespace ALinkEngine {
+namespace ALink {
 
 class OrthographicCamera {
  public:
@@ -27,11 +27,11 @@ class OrthographicCamera {
   glm::mat4 viewMatrix;
   glm::mat4 viewProjectionMatrix;
   glm::vec3 position = {0.0f, 0.0f, 0.0f};
-  float rotation = 0;
+  float rotation = 0.0f;
 };
 
 
-} // namespace ALinkEngine
+} // namespace ALink
 
 
 

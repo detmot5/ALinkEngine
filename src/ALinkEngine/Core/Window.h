@@ -10,7 +10,7 @@
 #include "Renderer/GraphicsContext.h"
 #include "alinkpch.h"
 
-namespace ALinkEngine {
+namespace ALink {
 using EventCallbackFn = std::function<void(Event&)>;
 struct WindowProps {
   WindowProps(const std::string& title = "ALink", uint32_t width = 1600,
@@ -47,6 +47,6 @@ class Window {
   GLFWwindow* windowHandle;
   std::unique_ptr<GraphicsContext> graphicsContext;
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_CORE_WINDOW_H_

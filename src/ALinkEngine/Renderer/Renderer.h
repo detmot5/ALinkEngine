@@ -5,7 +5,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/OrthographicCamera.h"
 #include "Renderer/Shader.h"
-namespace ALinkEngine {
+namespace ALink {
 
 struct SceneData {
   glm::mat4 viewProjectionMatrix;
@@ -21,6 +21,6 @@ class Renderer {
   static inline std::unique_ptr<SceneData> sceneData =
                                              std::make_unique<SceneData>();
 };
-}  // namespace ALinkEngine
+}  // namespace ALink
 
 #endif  // ALINKENGINE_RENDERER_RENDERER_H_

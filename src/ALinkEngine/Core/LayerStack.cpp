@@ -1,6 +1,7 @@
-#include "Core/LayerStack.h"
+#include "alinkpch.h"
+#include "LayerStack.h"
 
-namespace ALinkEngine {
+namespace ALink {
 LayerStack::LayerStack() : lastLayerIndex(0) {}
 
 LayerStack::~LayerStack() {
@@ -28,4 +29,4 @@ void LayerStack::DeleteOverlay(Layer* overlay) {
   auto position = std::find(this->layers.begin(), this->layers.end(), overlay);
   if (position != layers.end()) this->layers.erase(position);
 }
-}  // namespace ALinkEngine
+}  // namespace ALink
