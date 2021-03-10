@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 class ExampleLayer : public ALink::Layer {
  public:
   explicit ExampleLayer(const std::string& name) : Layer(name), camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
@@ -35,8 +36,8 @@ class ExampleLayer : public ALink::Layer {
 
     float sqverticies[4 * 7] = {
       -0.75f, -0.75f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
-      0.75f, -0.75f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
-      0.75f,  0.75f, 1.0f,  0.0f, 1.0f, 1.0f, 1.0f,
+       0.75f, -0.75f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
+       0.75f,  0.75f, 1.0f,  0.0f, 1.0f, 1.0f, 1.0f,
       -0.75f,  0.75f, 1.0f,  0.0f, 1.0f, 1.0f, 1.0f
     };
 
@@ -64,10 +65,11 @@ class ExampleLayer : public ALink::Layer {
       out vec4 v_Color;
 
       uniform mat4 u_ViewProjection;
+      uniform mat4 u_Transform;
       void main() {
         v_Position = a_Position;
         v_Color = a_Color;
-        gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
         
       }
     )";
@@ -77,35 +79,36 @@ class ExampleLayer : public ALink::Layer {
       layout(location = 0) out vec4 color;
       in vec3 v_Position;
       in vec4 v_Color;
+      uniform vec4 u_Color;
       void main() {
-        color = vec4(v_Position * 0.5 + 0.5, 1.0);
-        color = v_Color;
+        //color = vec4(v_Position * 0.5 + 0.5, 1.0);
+        color = u_Color;
+        
       }
     )";
 
-    this->shader.reset(new ALink::Shader(vertexSrc, fragmentSrc));
-    
+    this->shader = ALink::Shader::Create(vertexSrc, fragmentSrc);
   }
 
   void OnUpdate(ALink::TimeStep ts) override {
     using namespace ALink;
-    ALINK_LOG_INFO("Current Timestep: {0}", ts.GetSeconds());
+    //ALINK_LOG_INFO("Current framerate: {0}", 1 / ts.GetSeconds());
     float spd = 5 * ts;
     if (ALink::Input::IsKeyPressed(Key::W)) {
       auto pos = camera.GetPosition();
-      pos.y += spd;
+      pos.y -= spd;
       camera.SetPosition(pos);
     } else if (ALink::Input::IsKeyPressed(Key::S)) {
       auto pos = camera.GetPosition();
-      pos.y -= spd;
+      pos.y += spd;
       camera.SetPosition(pos);
     } else if (ALink::Input::IsKeyPressed(Key::A)) {
       auto pos = camera.GetPosition();
-      pos.x -= spd;
+      pos.x += spd;
       camera.SetPosition(pos);
     } else if (ALink::Input::IsKeyPressed(Key::D)) {
       auto pos = camera.GetPosition();
-      pos.x += spd;
+      pos.x -= spd;
       camera.SetPosition(pos);
     } else if (ALink::Input::IsKeyPressed(Key::Q)) {
       auto rotation = camera.GetRotation();
@@ -116,11 +119,26 @@ class ExampleLayer : public ALink::Layer {
     }
 
 
-
+    
+    static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.0f));
+  
     ALink::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     ALink::RenderCommand::Clear();
     ALink::Renderer::BeginScene(this->camera);
-    ALink::Renderer::Submit(this->shader, this->squareVA);
+    auto& openglsh = std::dynamic_pointer_cast<OpenGLShader>(this->shader);
+    openglsh->SetUniformFloat4("u_Color", this->mainColor);
+    for (int i = 0; i < 20; i++) {
+      for (int j = 0 ; j < 20; j++) {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.2f * i, 0.2f * j, 0.0f));
+        if ((!(j % 2)) && (!(i % 2))) {
+          openglsh->SetUniformFloat4("u_Color", glm::vec4(0.2f * i, 0.2f * j, 0.9f * i, 1.0f));
+        } else {
+          openglsh->SetUniformFloat4("u_Color", this->mainColor);
+        }
+        ALink::Renderer::Submit(this->shader, this->squareVA, transform * scale);
+      }
+    }
+    openglsh->SetUniformFloat4("u_Color", {0.9f, 0.4f, 0.0f, 1.0f});
     ALink::Renderer::Submit(this->shader, this->vertexArray);
     ALink::Renderer::EndScene();
   }
@@ -137,18 +155,18 @@ class ExampleLayer : public ALink::Layer {
 
   void OnImGuiRender() override {
     ImGui::Begin("Doopa");
-    if (ImGui::Button("click")) {
-      ALINK_LOG_INFO("Ouch");
-    }
+    ImGui::ColorEdit3("Main Color", glm::value_ptr(this->mainColor));
     ImGui::End();
   }
 
  private:
   std::shared_ptr<ALink::Shader> shader;
   std::shared_ptr<ALink::VertexArray> vertexArray;
-
   std::shared_ptr<ALink::VertexArray> squareVA;
+  glm::vec3 squarePosition = {0.5f, -0.5f, 0.0f};
+  glm::vec4 mainColor = {1.0f, 0.0f, 0.0f, 1.0f};
   ALink::OrthographicCamera camera;
+
 };
 
 class SandBox : public ALink::ALinkApplication {
