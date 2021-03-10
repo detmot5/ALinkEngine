@@ -39,6 +39,10 @@ target_include_directories(ALinkEngine PUBLIC vendor/glm)
 add_subdirectory(vendor/imgui)
 target_link_libraries(ALinkEngine imgui)
 
+# stb
+add_subdirectory(vendor/stb)
+target_link_libraries(ALinkEngine stb)
+
 target_precompile_headers(ALinkEngine PUBLIC alinkpch.h)
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ALinkEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Core)
