@@ -3,6 +3,9 @@
 #include "GraphicsAPI/OpenGL/OpenGLShader.h"
 #include <glm/gtc/matrix_transform.hpp>
 namespace ALink {
+void Renderer::Init() {
+  RenderCommand::Init();
+}
 void Renderer::BeginScene(const OrthographicCamera& camera) {
   sceneData->viewProjectionMatrix = camera.GetViewProjectionMatrix();
 }
