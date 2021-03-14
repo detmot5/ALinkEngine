@@ -31,6 +31,7 @@
 #include "Renderer/OrthographicCamera.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/ShaderLibrary.h"
 
 
 
