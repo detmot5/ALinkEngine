@@ -17,7 +17,7 @@ ImGuiLayer::~ImGuiLayer() {}
 void ImGuiLayer::OnAttach() {
     IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 
@@ -65,7 +65,7 @@ void ImGuiLayer::End() {
   ImGuiIO& io = ImGui::GetIO();
   auto& window = ALinkApplication::GetInstance().GetWindow();
   io.DisplaySize = ImVec2(window.GetWidth(), window.GetHeight());
-
+	
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
