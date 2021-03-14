@@ -30,9 +30,10 @@ class ALinkApplication {
   static inline ALinkApplication& GetInstance() { return *instance; }
 
  private:
+  TimeStep GetTimeStep();
   void OnEvent(Event& event);
   bool OnWindowCloseEvent(WindowCloseEvent& event);
-  bool OnKeyPressedEvent(KeyPressedEvent& event);
+  
 
  private:
   std::unique_ptr<Window> window;

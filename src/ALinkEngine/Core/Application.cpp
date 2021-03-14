@@ -19,18 +19,17 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
   this->isRunning = true;
   this->window->SetEventCallback(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnEvent));
+  Renderer::Init();
   this->imGuiLayer = new ImGuiLayer();
   this->AddOverlay(this->imGuiLayer);
 }
 
 void ALinkApplication::InternalEvents() {
   glViewport(0, 0, this->window->GetWidth(), this->window->GetHeight());
-  float currentTime = glfwGetTime();
-  TimeStep timeStep = currentTime - this->lastFrameTime;
-  this->lastFrameTime = currentTime;
 
+  TimeStep ts = this->GetTimeStep();
   for (auto layer : this->layerStack) {
-    layer->OnUpdate(timeStep);
+    layer->OnUpdate(ts);
   }
 
   this->imGuiLayer->Begin();
@@ -52,12 +51,18 @@ void ALinkApplication::AddOverlay(Layer* overlay) {
   overlay->OnAttach();
 }
 
+TimeStep ALinkApplication::GetTimeStep() {
+  static float lastFrameTime = 0;
+  float currentTime = glfwGetTime();
+  TimeStep timeStep = currentTime - lastFrameTime;
+  lastFrameTime = currentTime;
+  return timeStep;
+}
+
 void ALinkApplication::OnEvent(Event& event) {
   EventDispatcher dispacher(event);
   dispacher.Dispatch<WindowCloseEvent>(
       ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowCloseEvent));
-  dispacher.Dispatch<KeyPressedEvent>(
-      ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnKeyPressedEvent));
 
   for (auto it = this->layerStack.rbegin(); it != this->layerStack.rend();
        it++) {
@@ -68,11 +73,6 @@ void ALinkApplication::OnEvent(Event& event) {
 bool ALinkApplication::OnWindowCloseEvent(WindowCloseEvent& event) {
   this->isRunning = false;
   return true;
-}
-
-bool ALinkApplication::OnKeyPressedEvent(KeyPressedEvent& event) {
-
-  return false;
 }
 
 }  // namespace ALink
