@@ -9,7 +9,7 @@ class ExampleLayer : public ALink::Layer {
 
   void OnAttach() override {
     float verticies[3 * 7] = {
-      -0.5f, -0.5f, 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+     -0.5f, -0.5f, 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
       0.5f, -0.5f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
       0.0f,  0.5f, 1.0f,  1.0f, 1.0f, 0.0f, 1.0f
     };
@@ -35,10 +35,10 @@ class ExampleLayer : public ALink::Layer {
     this->squareVA = ALink::VertexArray::Create();
 
     float sqverticies[4 * 5] = {
-      -0.75f, -0.75f, 1.0f,  0.0f, 0.0f,
-       0.75f, -0.75f, 1.0f,  1.0f, 0.0f,
-       0.75f,  0.75f, 1.0f,  1.0f, 1.0f,
-      -0.75f,  0.75f, 1.0f,  0.0f, 1.0f
+      -0.9f, -0.75f, 1.0f,  0.0f, 0.0f,
+       0.9f, -0.75f, 1.0f,  1.0f, 0.0f,
+       0.9f,  0.75f, 1.0f,  1.0f, 1.0f,
+      -0.9f,  0.75f, 1.0f,  0.0f, 1.0f
     };
 
     std::shared_ptr<ALink::VertexBuffer> squareVB = ALink::VertexBuffer::Create(sqverticies, sizeof(sqverticies));
@@ -54,8 +54,6 @@ class ExampleLayer : public ALink::Layer {
 
     std::shared_ptr<ALink::IndexBuffer> squareIB = ALink::IndexBuffer::Create(sqindicies, 6);
     squareVA->SetIndexBuffer(squareIB);
-
-    camera.SetRotation(90.0f);
 
     std::string vertexSrc = R"(
       #version 330 compatibility
@@ -84,38 +82,19 @@ class ExampleLayer : public ALink::Layer {
       }
     )";
 
-    std::string textureVertexSrc = R"(
-      #version 330 compatibility
-      layout(location = 0) in vec3 a_Position;
-      layout(location = 1) in vec2 a_TextureCoords;
-      out vec2 v_TextureCoords;
-      uniform mat4 u_ViewProjection;
-      uniform mat4 u_Transform;
-      void main() {
-        v_TextureCoords = a_TextureCoords;
-        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-       
-      }
-    )";
+    ALINK_LOG_INFO("{0}", std::filesystem::current_path().filename().string());
+    this->shader = ALink::Shader::Create("dupa", vertexSrc, fragmentSrc);
+    this->shaderLib.Load("../../../../assets/shaders/Texture.glsl");
+    
+// TODO(me): Do something with this shit
+#ifdef ALINK_PLATFORM_WINDOWS
+    std::string texPath = "../../../../assets/images/cubes.png";
+#else
+    std::string texPath = "/mnt/share/assets/images/cubes.png";
+#endif  // ALINK_PLATFORM_WINDOWS
+    this->cubesTexture = ALink::Texture2D::Create(texPath);
 
-    std::string textureFragmentSrc = R"(
-      #version 330 compatibility
-      layout(location = 0) out vec4 color;
-      in vec2 v_TextureCoords;
-      uniform sampler2D u_Texture;
-      void main() {
-        color = texture(u_Texture, v_TextureCoords);
-      }
-    )";
-
-    ALINK_LOG_INFO("{0}", std::filesystem::current_path().string());
-
-
-    this->shader = ALink::Shader::Create(vertexSrc, fragmentSrc);
-    this->textureShader = ALink::Shader::Create(textureVertexSrc, textureFragmentSrc);
-    this->texture = ALink::Texture2D::Create("/Dev/Projects/Desktop/ALink/ALinkEngine/assets/images/cubes.png");
-
-    auto& openglsh = std::dynamic_pointer_cast<ALink::OpenGLShader>(this->shader);
+    auto openglsh = std::dynamic_pointer_cast<ALink::OpenGLShader>(this->shader);
     openglsh->Bind();
     openglsh->SetUniformInt("u_Texture", 0);
   }
@@ -155,22 +134,19 @@ class ExampleLayer : public ALink::Layer {
     ALink::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     ALink::RenderCommand::Clear();
     ALink::Renderer::BeginScene(this->camera);
-    auto& openglsh = std::dynamic_pointer_cast<ALink::OpenGLShader>(this->shader);
+    auto openglsh = std::dynamic_pointer_cast<ALink::OpenGLShader>(this->shader);
     openglsh->SetUniformFloat4("u_Color", this->mainColor);
     for (int i = 0; i < 20; i++) {
       for (int j = 0 ; j < 20; j++) {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.2f * i, 0.2f * j, 0.0f));
-        if ((!(j % 2)) && (!(i % 2))) {
-          openglsh->SetUniformFloat4("u_Color", glm::vec4(0.2f * i, 0.2f * j, 0.9f * i, 1.0f));
-        } else {
-          openglsh->SetUniformFloat4("u_Color", this->mainColor);
-        }
+        openglsh->SetUniformFloat4("u_Color", this->mainColor);
         ALink::Renderer::Submit(this->shader, this->squareVA, transform * scale);
       }
     }
 
-    this->texture->Bind();
-    ALink::Renderer::Submit(this->textureShader, this->squareVA,
+    auto textureShader = this->shaderLib.GetShader("Texture");
+    this->cubesTexture->Bind();
+    ALink::Renderer::Submit(textureShader, this->squareVA,
                                           glm::scale(glm::mat4(1.0f), glm::vec3(1.5f, 1.5f, 0.0f)));
     ALink::Renderer::EndScene();
   }
@@ -192,12 +168,14 @@ class ExampleLayer : public ALink::Layer {
   }
 
  private:
-  std::shared_ptr<ALink::Shader> shader, textureShader;
+  ALink::ShaderLibrary shaderLib;
+  std::shared_ptr<ALink::Shader> shader;
   std::shared_ptr<ALink::VertexArray> vertexArray;
   std::shared_ptr<ALink::VertexArray> squareVA;
-  std::shared_ptr<ALink::Texture2D> texture;
+  std::shared_ptr<ALink::Texture2D> cubesTexture;
+  std::shared_ptr<ALink::Texture2D> boardTexture;
   glm::vec3 squarePosition = {0.5f, -0.5f, 0.0f};
-  glm::vec4 mainColor = {1.0f, 0.0f, 0.0f, 1.0f};
+  glm::vec4 mainColor = {0.0f, 0.0f, 1.0f, 1.0f};
   ALink::OrthographicCamera camera;
 
 };
