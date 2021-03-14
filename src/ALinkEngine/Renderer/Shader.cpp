@@ -5,13 +5,22 @@
 #include <glm/gtc/type_ptr.hpp>
 namespace ALink {
 
-std::shared_ptr<Shader> Shader::Create(const std::string& vertexSrc, const std::string& fragmentSrc) {
+std::shared_ptr<Shader> Shader::Create(const std::string& name,
+                                       const std::string& vertexSrc,
+                                       const std::string& fragmentSrc) {
 #ifdef ALINK_GL_OPENGL
-  return std::make_shared<OpenGLShader>(vertexSrc, fragmentSrc);
+  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
 #else
 #error "ALINK_GL not defined! Please define API what ALink should use eg. ALINK_GL_OPENGL"
 #endif  // ALINK_GL_OPENGL
 }
 
+std::shared_ptr<Shader> Shader::Create(const std::string& filePath) {
+#ifdef ALINK_GL_OPENGL
+  return std::make_shared<OpenGLShader>(filePath);
+#else
+  #error "ALINK_GL not defined! Please define API what ALink should use eg. ALINK_GL_OPENGL"
+#endif  // ALINK_GL_OPENGL
+}
 
 }  // namespace ALink
