@@ -5,13 +5,15 @@
 
 class ExampleLayer : public ALink::Layer {
  public:
-  explicit ExampleLayer(const std::string& name) : Layer(name), camera(-1.6f, 1.6f, -0.9f, 0.9f) {}
+  explicit ExampleLayer(const std::string& name)
+    : Layer(name),
+      cameraController(1600.0f / 900.0f) {}
 
   void OnAttach() override {
     float verticies[3 * 7] = {
-     -0.5f, -0.5f, 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-      0.5f, -0.5f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
-      0.0f,  0.5f, 1.0f,  1.0f, 1.0f, 0.0f, 1.0f
+     -1.0f, -1.0f, 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+      1.0f, -1.0f, 1.0f,  0.0f, 0.0f, 1.0f, 1.0f,
+      1.0f,  1.0f, 1.0f,  1.0f, 1.0f, 0.0f, 1.0f
     };
 
     uint32_t indicies[] = {
@@ -100,40 +102,12 @@ class ExampleLayer : public ALink::Layer {
   }
 
   void OnUpdate(ALink::TimeStep ts) override {
-    using namespace ALink;
-    // ALINK_LOG_INFO("Current framerate: {0}", 1 / ts.GetSeconds());
-    float spd = 5 * ts;
-    if (ALink::Input::IsKeyPressed(Key::W)) {
-      auto pos = camera.GetPosition();
-      pos.y -= spd;
-      camera.SetPosition(pos);
-    } else if (ALink::Input::IsKeyPressed(Key::S)) {
-      auto pos = camera.GetPosition();
-      pos.y += spd;
-      camera.SetPosition(pos);
-    } else if (ALink::Input::IsKeyPressed(Key::A)) {
-      auto pos = camera.GetPosition();
-      pos.x += spd;
-      camera.SetPosition(pos);
-    } else if (ALink::Input::IsKeyPressed(Key::D)) {
-      auto pos = camera.GetPosition();
-      pos.x -= spd;
-      camera.SetPosition(pos);
-    } else if (ALink::Input::IsKeyPressed(Key::Q)) {
-      auto rotation = camera.GetRotation();
-      camera.SetRotation(rotation += 180.0f * ts);
-    } else if (ALink::Input::IsKeyPressed(Key::E)) {
-      auto rotation = camera.GetRotation();
-      camera.SetRotation(rotation -= 180.0f * ts);
-    }
-
-
-    
+    this->cameraController.OnUpdate(ts);
     static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.0f));
   
     ALink::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     ALink::RenderCommand::Clear();
-    ALink::Renderer::BeginScene(this->camera);
+    ALink::Renderer::BeginScene(this->cameraController.GetCamera());
     auto openglsh = std::dynamic_pointer_cast<ALink::OpenGLShader>(this->shader);
     openglsh->SetUniformFloat4("u_Color", this->mainColor);
     for (int i = 0; i < 20; i++) {
@@ -155,6 +129,7 @@ class ExampleLayer : public ALink::Layer {
     ALink::EventDispatcher dispatcher(event);
     dispatcher.Dispatch<ALink::KeyPressedEvent>(
       ALINK_BIND_EVENT_CALLBACK(ExampleLayer::OnKeyPressedEvent));
+    this->cameraController.OnEvent(event);
   }
 
   bool OnKeyPressedEvent(ALink::KeyPressedEvent event) {
@@ -176,7 +151,7 @@ class ExampleLayer : public ALink::Layer {
   std::shared_ptr<ALink::Texture2D> boardTexture;
   glm::vec3 squarePosition = {0.5f, -0.5f, 0.0f};
   glm::vec4 mainColor = {0.0f, 0.0f, 1.0f, 1.0f};
-  ALink::OrthographicCamera camera;
+  ALink::OrthographicCameraController cameraController;
 
 };
 
