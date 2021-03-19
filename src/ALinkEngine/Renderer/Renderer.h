@@ -14,6 +14,7 @@ struct SceneData {
 class Renderer {
  public:
   static void Init();
+  static void OnWindowResize(uint32_t width, uint32_t height);
   static void BeginScene(const OrthographicCamera& camera);
   static void EndScene();
   static void Submit(const std::shared_ptr<Shader>& shader,
@@ -23,6 +24,7 @@ class Renderer {
   static inline std::unique_ptr<SceneData> sceneData =
                                              std::make_unique<SceneData>();
 };
+
 }  // namespace ALink
 
 #endif  // ALINKENGINE_RENDERER_RENDERER_H_
