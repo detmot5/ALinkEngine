@@ -32,7 +32,8 @@ class ALinkApplication {
  private:
   TimeStep GetTimeStep();
   void OnEvent(Event& event);
-  bool OnWindowCloseEvent(WindowCloseEvent& event);
+  bool OnWindowClose(WindowCloseEvent& event);
+  bool OnWindowResize(WindowResizeEvent& event);
   
 
  private:
@@ -40,6 +41,7 @@ class ALinkApplication {
   ImGuiLayer* imGuiLayer;
   LayerStack layerStack;
   bool isRunning;
+  bool isMinimized;
   float lastFrameTime = 0.0f;
   static inline ALinkApplication* instance = nullptr;
 

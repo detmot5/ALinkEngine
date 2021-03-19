@@ -25,19 +25,20 @@ void ALinkApplication::InternalInit(int argc, char* argv[]) {
 }
 
 void ALinkApplication::InternalEvents() {
-  glViewport(0, 0, this->window->GetWidth(), this->window->GetHeight());
-
   TimeStep ts = this->GetTimeStep();
-  for (auto layer : this->layerStack) {
-    layer->OnUpdate(ts);
-  }
 
-  this->imGuiLayer->Begin();
-  for (auto layer : this->layerStack) {
-    layer->OnImGuiRender();
-  }
-  this->imGuiLayer->End();
+  if (!this->isMinimized) {
+    for (auto layer : this->layerStack) {
+      layer->OnUpdate(ts);
+    }
 
+    this->imGuiLayer->Begin();
+    for (auto layer : this->layerStack) {
+      layer->OnImGuiRender();
+    }
+    this->imGuiLayer->End();
+
+  }
   this->window->OnUpdate();
 }
 
@@ -62,7 +63,9 @@ TimeStep ALinkApplication::GetTimeStep() {
 void ALinkApplication::OnEvent(Event& event) {
   EventDispatcher dispacher(event);
   dispacher.Dispatch<WindowCloseEvent>(
-      ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowCloseEvent));
+    ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowClose));
+  dispacher.Dispatch<WindowResizeEvent>(
+    ALINK_BIND_EVENT_CALLBACK(ALinkApplication::OnWindowResize));
 
   for (auto it = this->layerStack.rbegin(); it != this->layerStack.rend();
        it++) {
@@ -70,9 +73,19 @@ void ALinkApplication::OnEvent(Event& event) {
   }
 }
 
-bool ALinkApplication::OnWindowCloseEvent(WindowCloseEvent& event) {
+bool ALinkApplication::OnWindowClose(WindowCloseEvent& event) {
   this->isRunning = false;
   return true;
+}
+
+bool ALinkApplication::OnWindowResize(WindowResizeEvent& event) {
+  if (event.GetWidth() == 0 || event.GetHeight() == 0) {
+    this->isMinimized = true;
+  } else {
+    this->isMinimized = false;
+  }
+  Renderer::OnWindowResize(event.GetWidth(), event.GetHeight());
+  return false;
 }
 
 }  // namespace ALink

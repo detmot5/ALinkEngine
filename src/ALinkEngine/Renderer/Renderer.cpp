@@ -2,9 +2,14 @@
 #include "Renderer.h"
 #include "GraphicsAPI/OpenGL/OpenGLShader.h"
 #include <glm/gtc/matrix_transform.hpp>
+
 namespace ALink {
 void Renderer::Init() {
   RenderCommand::Init();
+}
+
+void Renderer::OnWindowResize(uint32_t width, uint32_t height) {
+  RenderCommand::SetViewPort(width, height);
 }
 void Renderer::BeginScene(const OrthographicCamera& camera) {
   sceneData->viewProjectionMatrix = camera.GetViewProjectionMatrix();
@@ -25,3 +30,4 @@ void Renderer::Submit(const std::shared_ptr<Shader>& shader,
 }
 
 }  // namespace ALink
+  
